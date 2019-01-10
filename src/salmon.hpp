@@ -43,6 +43,12 @@ public:
 	// Called when the salmon collides with a fish, starts lighting up the salmon
 	void light_up();
 
+	// Set salmon movement flag (used to keep track of the stte of the user keys)
+	void Salmon::set_movement(const std::string& flag);
+
+	// Get salmon movement flag (used to keep track of the stte of the user keys)
+	bool Salmon::get_movement(const std::string& flag);
+
 private:
 	float m_light_up_countdown_ms; // Used to keep track for how long the salmon should be lit up
 	bool m_is_alive; // True if the salmon is alive

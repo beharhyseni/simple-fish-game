@@ -10,6 +10,12 @@
 #include <string>
 #include <algorithm>
 
+bool is_up = false;
+bool is_down = false;
+bool is_left = false;
+bool is_right = false;
+vec2 translation_vec;
+
 bool Salmon::init()
 {
 	std::vector<Vertex> vertices;
@@ -101,13 +107,33 @@ void Salmon::update(float ms)
 {
 	const float SALMON_SPEED = 200.f;
 	float step = SALMON_SPEED * (ms / 1000);
+	vec2 up_vec = {0.f, -1.f };
+	vec2 down_vec = {0.f, 1.f };
+	vec2 left_vec = {-1.f, 0.f};
+	vec2 right_vec = {1.f, 0.f};
+
 	if (m_is_alive)
+
 	{
 		// !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 		// UPDATE SALMON POSITION HERE BASED ON KEY PRESSED (World::on_key())
 		// !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 
+		if (is_up) {
+			move(up_vec);
+		}
+		if (is_down) {
+			move(down_vec);
+		}
+		if (is_left) {
+			move(left_vec);
+		}
+		if (is_right) {
+			move(right_vec);
+		}
 
+
+		
 		
 	}
 	else
@@ -136,10 +162,12 @@ void Salmon::draw(const mat3& projection)
 
 	// !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 	// REMOVE THE FOLLOWING LINES BEFORE ADDING ANY TRANSFORMATION CODE
-	transform_translate({ 100.f, 100.f });
-	transform_scale(m_scale);
+	//transform_translate({ 100.f, 100.f });
+	//transform_scale(m_scale);
 	// !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 
+	transform_translate({translation_vec.x, translation_vec.y });
+	transform_scale(m_scale);
 
 	transform_end();
 
@@ -225,6 +253,7 @@ vec2 Salmon::get_position()const
 void Salmon::move(vec2 off)
 {
 	m_position.x += off.x; m_position.y += off.y;
+	translation_vec = { m_position.x, m_position.y };
 }
 
 void Salmon::set_rotation(float radians)
@@ -236,6 +265,58 @@ bool Salmon::is_alive()const
 {
 	return m_is_alive;
 }
+
+
+// Set salmon movement flag (used to keep track of the stte of the user keys)
+void Salmon::set_movement(const std::string& flag) {
+	if (flag == "up") {
+		is_up = true;
+	}
+
+	if (flag == "upf") {
+		is_up = false;
+	}
+
+	if (flag == "down") {
+		is_down = true;
+	}
+	if (flag == "downf") {
+		is_down = false;
+	}
+	
+	if (flag == "left") {
+		is_left = true;
+	}
+	if (flag == "leftf") {
+		is_left = false;
+	}
+	
+	if (flag == "right") {
+		is_right = true;
+	}
+
+	if (flag == "rightf") {
+		is_right = false;
+	}
+}
+
+// Get salmon movement flag (used to keep track of the stte of the user keys)
+bool Salmon::get_movement(const std::string& flag) {
+	if (flag == "up") {
+		return is_up;
+	}
+	else if (flag == "down") {
+		return is_down;
+	}
+	else if (flag == "left") {
+		return is_left;
+	}
+	else if (flag == "right") {
+		return is_right;
+	}
+
+}
+
 
 // Called when the salmon collides with a turtle
 void Salmon::kill()

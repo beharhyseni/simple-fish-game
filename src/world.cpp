@@ -387,6 +387,59 @@ void World::on_key(GLFWwindow*, int key, int, int action, int mod)
 		m_current_speed = 1.f;
 	}
 
+
+	// Moving Down	
+	if (action == GLFW_PRESS && key == GLFW_KEY_DOWN)
+	{
+		if (action != GLFW_RELEASE) {
+			m_salmon.set_movement("down");
+
+		}
+		else {
+			m_salmon.set_movement("downf");
+		}
+	}
+
+	// Moving Up
+	if (action == GLFW_PRESS && key == GLFW_KEY_UP) {
+			m_salmon.set_movement("up");
+	}
+	else if (action == GLFW_RELEASE && key == GLFW_KEY_UP) {
+		m_salmon.set_movement("upf");
+	}
+
+	// Moving Left
+	if (action == GLFW_PRESS && key == GLFW_KEY_LEFT)
+	{
+
+
+		if (action != GLFW_RELEASE) {
+			m_salmon.set_movement("left");
+		}
+		else {
+			m_salmon.set_movement("leftf");
+		}
+	}
+
+	// Moving Right
+	if (action == GLFW_PRESS && key == GLFW_KEY_RIGHT) {
+
+		if (action != GLFW_RELEASE) {
+			m_salmon.set_movement("right");
+		}
+		else { m_salmon.set_movement("rightf"); }
+
+	}
+
+
+
+	
+
+	
+
+
+
+
 	// Control the current speed with `<` `>`
 	if (action == GLFW_RELEASE && (mod & GLFW_MOD_SHIFT) &&  key == GLFW_KEY_COMMA)
 		m_current_speed -= 0.1f;
