@@ -15,6 +15,9 @@ bool is_down = false;
 bool is_left = false;
 bool is_right = false;
 vec2 translation_vec;
+double prev_salmon_x_pos;
+double prev_salmon_y_pos;
+
 
 bool Salmon::init()
 {
@@ -168,7 +171,7 @@ void Salmon::draw(const mat3& projection)
 
 	transform_translate({translation_vec.x, translation_vec.y });
 	transform_scale(m_scale);
-
+	transform_rotate(m_rotation);
 	transform_end();
 
 	// Setting shaders
@@ -250,6 +253,13 @@ vec2 Salmon::get_position()const
 	return m_position;
 }
 
+void Salmon::set_salmon_prev_facing_position(double x, double y)
+{
+	prev_salmon_x_pos = x;
+	prev_salmon_y_pos = y;
+	
+}
+
 void Salmon::move(vec2 off)
 {
 	m_position.x += off.x; m_position.y += off.y;
@@ -258,6 +268,7 @@ void Salmon::move(vec2 off)
 
 void Salmon::set_rotation(float radians)
 {
+
 	m_rotation = radians;
 }
 
@@ -318,6 +329,12 @@ bool Salmon::get_movement(const std::string& flag) {
 }
 
 
+float calc_angle(double p1, double p2, double xpos, double ypos) {
+
+	float angle = atan2(ypos - p2, xpos - p1);
+	return angle;
+}
+
 // Called when the salmon collides with a turtle
 void Salmon::kill()
 {
@@ -329,3 +346,4 @@ void Salmon::light_up()
 {
 	m_light_up_countdown_ms = 1500.f;
 }
+

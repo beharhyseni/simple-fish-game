@@ -394,8 +394,7 @@ void World::on_key(GLFWwindow*, int key, int, int action, int mod)
 
 		}
 	else if (action == GLFW_RELEASE && key == GLFW_KEY_DOWN){
-			m_salmon.set_movement("downf");
-		
+			m_salmon.set_movement("downf");		
 	}
 
 	// Moving Up
@@ -424,15 +423,6 @@ void World::on_key(GLFWwindow*, int key, int, int action, int mod)
 
 	}
 
-
-
-	
-
-	
-
-
-
-
 	// Control the current speed with `<` `>`
 	if (action == GLFW_RELEASE && (mod & GLFW_MOD_SHIFT) &&  key == GLFW_KEY_COMMA)
 		m_current_speed -= 0.1f;
@@ -449,6 +439,17 @@ void World::on_mouse_move(GLFWwindow* window, double xpos, double ypos)
 	// xpos and ypos are relative to the top-left of the window, the salmon's 
 	// default facing direction is (1, 0)
 	// !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+	double def_facing_x = 1.0;
+	double def_facing_y = 0.0;
 
+
+	float the_angle = m_salmon.calc_angle(def_facing_x, def_facing_y, xpos, ypos);
+
+	m_salmon.set_salmon_prev_facing_position(xpos, ypos);
+
+	m_salmon.set_rotation(the_angle);
 
 }
+
+
+

@@ -38,6 +38,7 @@ public:
 	// Should the game be over ?
 	bool is_over()const;
 
+
 private:
 	// Generates a new turtle
 	bool spawn_turtle();

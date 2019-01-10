@@ -28,6 +28,12 @@ public:
 	// Returns the current salmon position
 	vec2 get_position()const;
 
+	// Calculates the angle between salmon facing direction point and mouse direction
+	float calc_angle(double p1, double p2, double xpos, double ypos);
+
+	// Save the mouse position coordinates (will be used to save the coordinates from World Class to Salmon Class)
+	void set_salmon_prev_facing_position(double x, double y);
+
 	// Moves the salmon's position by the specified offset
 	void move(vec2 off);
 
