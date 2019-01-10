@@ -389,15 +389,13 @@ void World::on_key(GLFWwindow*, int key, int, int action, int mod)
 
 
 	// Moving Down	
-	if (action == GLFW_PRESS && key == GLFW_KEY_DOWN)
-	{
-		if (action != GLFW_RELEASE) {
+	if (action == GLFW_PRESS && key == GLFW_KEY_DOWN){
 			m_salmon.set_movement("down");
 
 		}
-		else {
+	else if (action == GLFW_RELEASE && key == GLFW_KEY_DOWN){
 			m_salmon.set_movement("downf");
-		}
+		
 	}
 
 	// Moving Up
@@ -409,25 +407,20 @@ void World::on_key(GLFWwindow*, int key, int, int action, int mod)
 	}
 
 	// Moving Left
-	if (action == GLFW_PRESS && key == GLFW_KEY_LEFT)
-	{
-
-
-		if (action != GLFW_RELEASE) {
-			m_salmon.set_movement("left");
-		}
-		else {
+	if (action == GLFW_PRESS && key == GLFW_KEY_LEFT) {
+		m_salmon.set_movement("left");
+	}
+	else if(action == GLFW_RELEASE && key == GLFW_KEY_LEFT){
 			m_salmon.set_movement("leftf");
-		}
 	}
 
 	// Moving Right
 	if (action == GLFW_PRESS && key == GLFW_KEY_RIGHT) {
-
-		if (action != GLFW_RELEASE) {
-			m_salmon.set_movement("right");
-		}
-		else { m_salmon.set_movement("rightf"); }
+		m_salmon.set_movement("right");
+	}
+		
+	else if (action == GLFW_RELEASE && key == GLFW_KEY_RIGHT){
+		 m_salmon.set_movement("rightf"); 
 
 	}
 
