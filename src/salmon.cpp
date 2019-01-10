@@ -329,10 +329,10 @@ bool Salmon::get_movement(const std::string& flag) {
 }
 
 
-float calc_angle(double p1, double p2, double xpos, double ypos) {
+float Salmon::calc_angle(double p1, double p2, double xpos, double ypos) {
 
 	float angle = atan2(ypos - p2, xpos - p1);
-	return angle;
+	return -angle;
 }
 
 // Called when the salmon collides with a turtle

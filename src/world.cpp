@@ -442,6 +442,7 @@ void World::on_mouse_move(GLFWwindow* window, double xpos, double ypos)
 	double def_facing_x = 1.0;
 	double def_facing_y = 0.0;
 
+	
 
 	float the_angle = m_salmon.calc_angle(def_facing_x, def_facing_y, xpos, ypos);
 
