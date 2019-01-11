@@ -439,12 +439,19 @@ void World::on_mouse_move(GLFWwindow* window, double xpos, double ypos)
 	// xpos and ypos are relative to the top-left of the window, the salmon's 
 	// default facing direction is (1, 0)
 	// !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+
 	double def_facing_x = 1.0;
 	double def_facing_y = 0.0;
-
+	float the_angle;
 	
-
-	float the_angle = m_salmon.calc_angle(def_facing_x, def_facing_y, xpos, ypos);
+	if (def_facing_x == 1.0 && def_facing_y == 0.0) {
+		
+		the_angle = m_salmon.calc_angle(m_salmon.get_position().x, m_salmon.get_position().y, xpos, ypos);
+	}
+	else {
+		the_angle = m_salmon.calc_angle(m_salmon.get_prev_x(), m_salmon.get_prev_x(), xpos, ypos);
+		
+	}
 
 	m_salmon.set_salmon_prev_facing_position(xpos, ypos);
 

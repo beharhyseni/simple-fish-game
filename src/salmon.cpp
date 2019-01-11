@@ -15,8 +15,8 @@ bool is_down = false;
 bool is_left = false;
 bool is_right = false;
 vec2 translation_vec;
-double prev_salmon_x_pos;
-double prev_salmon_y_pos;
+double prev_salmon_x_pos = 1.0;
+double prev_salmon_y_pos = 0.0;
 
 
 bool Salmon::init()
@@ -260,6 +260,18 @@ void Salmon::set_salmon_prev_facing_position(double x, double y)
 	
 }
 
+double Salmon::get_prev_x()
+{
+	return prev_salmon_x_pos;
+
+}
+
+double Salmon::get_prev_y()
+{
+	return prev_salmon_y_pos;
+
+}
+
 void Salmon::move(vec2 off)
 {
 	m_position.x += off.x; m_position.y += off.y;
@@ -328,7 +340,7 @@ bool Salmon::get_movement(const std::string& flag) {
 
 }
 
-
+// Calculates the angle between salmon facing direction point and mouse direction
 float Salmon::calc_angle(double p1, double p2, double xpos, double ypos) {
 
 	float angle = atan2(ypos - p2, xpos - p1);

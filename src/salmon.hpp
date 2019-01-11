@@ -31,6 +31,12 @@ public:
 	// Calculates the angle between salmon facing direction point and mouse direction
 	float calc_angle(double p1, double p2, double xpos, double ypos);
 
+	// Return the previous direction of the salmon (x coordinate)
+	double get_prev_x();
+
+	// Return the previous direction of the salmon (y coordinate)
+	double get_prev_y();
+
 	// Save the mouse position coordinates (will be used to save the coordinates from World Class to Salmon Class)
 	void set_salmon_prev_facing_position(double x, double y);
 
