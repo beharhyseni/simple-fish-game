@@ -17,6 +17,7 @@ bool is_right = false;
 vec2 translation_vec;
 double prev_salmon_x_pos = 1.0;
 double prev_salmon_y_pos = 0.0;
+int the_light = 0;
 
 
 bool Salmon::init()
@@ -211,9 +212,15 @@ void Salmon::draw(const mat3& projection)
 	// !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 	// HERE TO SET THE CORRECTLY LIGHT UP THE SALMON IF HE HAS EATEN RECENTLY
 	// !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-	int light_up = 0;
+	int light_up = the_light;
 	glUniform1iv(light_up_uloc, 1, &light_up);
+	//set_light(0);
 
+	float red_color[] = { 255.f, 0.f, 0.f };
+
+	if (!is_alive()) {
+		glUniform3fv(color_uloc, 1, red_color);
+	}
 
 	// Drawing!
 	glDrawElements(GL_TRIANGLES,(GLsizei)m_num_indices, GL_UNSIGNED_SHORT, nullptr);
@@ -356,6 +363,12 @@ void Salmon::kill()
 // Called when the salmon collides with a fish
 void Salmon::light_up()
 {
+	set_light(1);
 	m_light_up_countdown_ms = 1500.f;
+	//set_light(0);
+}
+
+void Salmon::set_light(int n) {
+	the_light = n;
 }
 
