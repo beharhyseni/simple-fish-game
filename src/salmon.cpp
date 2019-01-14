@@ -111,10 +111,10 @@ void Salmon::update(float ms)
 {
 	const float SALMON_SPEED = 200.f;
 	float step = SALMON_SPEED * (ms / 1000);
-	vec2 up_vec = {0.f, -1.f };
-	vec2 down_vec = {0.f, 1.f };
-	vec2 left_vec = {-1.f, 0.f};
-	vec2 right_vec = {1.f, 0.f};
+	vec2 up_vec = {0.f, -2.f };
+	vec2 down_vec = {0.f, 2.f };
+	vec2 left_vec = {-2.f, 0.f};
+	vec2 right_vec = {2.f, 0.f};
 
 	if (m_is_alive)
 

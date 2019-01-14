@@ -331,7 +331,6 @@ void World::draw()
 	// Bind our texture in Texture Unit 0
 	glActiveTexture(GL_TEXTURE0);
 	glBindTexture(GL_TEXTURE_2D, m_screen_tex.id);
-
 	m_water.draw(projection_2D);
 
 	//////////////////
