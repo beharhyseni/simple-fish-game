@@ -21,19 +21,19 @@ vec2 distort(vec2 uv) {
 	
 	// Angular frequency
 	float w = 2.f * PI * 0.5f;
-	w = 4.f* w;
+	w = 3.f * w;
 
 	// Phase
-	float p = 0.f;
+	float p = 6.f;
 
 	// Sine wave function
-	float yx = A * sin(w  * uv.x + p);
-	float yy = A * sin(w  * uv.y + p);
+	float yx = A * sin(w  * uv.x + time + p);
+	float yy = A * sin(w  * uv.y  + p);
 
 	//vec2 coord = uv.xy;
 
 	
-    return vec2(uv.x + yy, uv.y + yx);
+    return vec2(uv.x + yy, uv.y + yx + yy);
 }
 
 // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
@@ -41,13 +41,17 @@ vec2 distort(vec2 uv) {
 // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 vec4 color_shift(vec4 in_color) {
 	vec4 color = in_color;
-	return color;
+
+	vec4 final_color = vec4(color.r, color.g, color.b + 0.5f, color.a);
+
+	return final_color;
 }
 
 vec4 fade_color(vec4 in_color) {
 	vec4 color = in_color;
 	if (dead_timer > 0)
 		color -= 0.1 * dead_timer * vec4(0.1, 0.1, 0.1, 0);
+	
 
 	return color;
 }
