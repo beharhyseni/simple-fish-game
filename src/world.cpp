@@ -173,14 +173,20 @@ bool World::update(float elapsed_ms)
 	{
 		if (m_salmon.is_alive() && m_salmon.collides_with(*fish_it))
 		{
+			m_salmon.set_light(1);
+
 			fish_it = m_fish.erase(fish_it);
 			m_salmon.light_up();
 			Mix_PlayChannel(-1, m_salmon_eat_sound, 0);
 			++m_points;
+
+			
 		}
 		else
 			++fish_it;
+
 	}
+	
 	
 	// Updating all entities, making the turtle and fish
 	// faster based on current

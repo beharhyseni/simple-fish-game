@@ -55,6 +55,7 @@ public:
 	// Called when the salmon collides with a fish, starts lighting up the salmon
 	void light_up();
 
+	// Set the Salmon light state (if just ate a fish: set 1; else 0)
 	void set_light(int n);
 
 

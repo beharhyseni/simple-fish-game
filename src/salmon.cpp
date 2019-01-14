@@ -147,8 +147,16 @@ void Salmon::update(float ms)
 		move({ 0.f, step });
 	}
 
-	if (m_light_up_countdown_ms > 0.f)
+	if (m_light_up_countdown_ms > 0.f) {
 		m_light_up_countdown_ms -= ms;
+		
+		// If the countdown time is now less than or equal to 0, stop the light in the Salmon
+		if (m_light_up_countdown_ms <= 0.f) {
+			set_light(0);
+		}
+	}
+
+	
 }
 
 void Salmon::draw(const mat3& projection)
@@ -214,10 +222,10 @@ void Salmon::draw(const mat3& projection)
 	// !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 	int light_up = the_light;
 	glUniform1iv(light_up_uloc, 1, &light_up);
-	//set_light(0);
 
 	float red_color[] = { 255.f, 0.f, 0.f };
 
+	// When the salmon is dead (that is, gets hit by a turtle), color the salmon in red when sinking
 	if (!is_alive()) {
 		glUniform3fv(color_uloc, 1, red_color);
 	}
@@ -363,11 +371,10 @@ void Salmon::kill()
 // Called when the salmon collides with a fish
 void Salmon::light_up()
 {
-	set_light(1);
 	m_light_up_countdown_ms = 1500.f;
-	//set_light(0);
 }
 
+// Set the Salmon light state (if just ate a fish: set 1; else 0)
 void Salmon::set_light(int n) {
 	the_light = n;
 }
