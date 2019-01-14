@@ -11,8 +11,29 @@ layout(location = 0) out vec4 color;
 // HANDLE THE WATER WAVE DISTORTION HERE (you may want to try sin/cos)
 // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 vec2 distort(vec2 uv) {
-	vec2 coord = uv.xy;
-    return coord;
+
+// The most basic form of the sine wave function is: A*sin(wt + p)
+	
+	float PI = 3.14159265359;
+
+	// Amplitude
+	float A = 0.01f;
+	
+	// Angular frequency
+	float w = 2.f * PI * 0.5f;
+	w = 4.f* w;
+
+	// Phase
+	float p = 0.f;
+
+	// Sine wave function
+	float yx = A * sin(w  * uv.x + p);
+	float yy = A * sin(w  * uv.y + p);
+
+	//vec2 coord = uv.xy;
+
+	
+    return vec2(uv.x + yy, uv.y + yx);
 }
 
 // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
