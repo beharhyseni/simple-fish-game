@@ -50,7 +50,7 @@ vec4 color_shift(vec4 in_color) {
 vec4 fade_color(vec4 in_color) {
 	vec4 color = in_color;
 	if (dead_timer > 0)
-		color -= 0.1 * dead_timer * vec4(0.1, 0.1, 0.1, 0);
+		color -= 0.3 * dead_timer * vec4(0.1, 0.1, 0.1, 0);
 	
 
 	return color;
