@@ -6,6 +6,8 @@
 #include "turtle.hpp"
 #include "fish.hpp"
 #include "water.hpp"
+#include "shark.hpp"
+
 
 // stlib
 #include <vector>
@@ -42,6 +44,9 @@ public:
 private:
 	// Generates a new turtle
 	bool spawn_turtle();
+	
+	// Generates a new shark
+	bool spawn_shark();
 
 	// Generates a new fish
 	bool spawn_fish();
@@ -68,10 +73,12 @@ private:
 	// Game entities
 	Salmon m_salmon;
 	std::vector<Turtle> m_turtles;
+	std::vector<Shark> m_sharks;
 	std::vector<Fish> m_fish;
 
 	float m_current_speed;
 	float m_next_turtle_spawn;
+	float m_next_shark_spawn;
 	float m_next_fish_spawn;
 	
 	Mix_Music* m_background_music;

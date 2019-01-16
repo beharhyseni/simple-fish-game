@@ -38,6 +38,7 @@ set(SOURCE_FILES
 	src/turtle.cpp
 	src/water.cpp
 	src/world.cpp
+	src/shark.cpp
 
     src/project_path.hpp
 	src/common.hpp
@@ -46,6 +47,7 @@ set(SOURCE_FILES
 	src/turtle.hpp
 	src/water.hpp
 	src/world.hpp
+	src/shark.hpp
 	)
 
 add_executable(${PROJECT_NAME} ${SOURCE_FILES})

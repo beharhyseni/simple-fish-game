@@ -4,6 +4,7 @@
 // internal
 #include "turtle.hpp"
 #include "fish.hpp"
+#include "shark.hpp"
 
 // stlib
 #include <vector>
@@ -225,7 +226,7 @@ void Salmon::draw(const mat3& projection)
 
 	float red_color[] = { 255.f, 0.f, 0.f };
 
-	// When the salmon is dead (that is, gets hit by a turtle), color the salmon in red when sinking
+	// When the salmon is dead (that is, gets hit by a turtle or a shark), color the salmon in red when sinking
 	if (!is_alive()) {
 		glUniform3fv(color_uloc, 1, red_color);
 	}
@@ -241,6 +242,21 @@ bool Salmon::collides_with(const Turtle& turtle)
 	float dy = m_position.y - turtle.get_position().y;
 	float d_sq = dx * dx + dy * dy;
 	float other_r = std::max(turtle.get_bounding_box().x, turtle.get_bounding_box().y);
+	float my_r = std::max(m_scale.x, m_scale.y);
+	float r = std::max(other_r, my_r);
+	r *= 0.6f;
+	if (d_sq < r * r)
+		return true;
+	return false;
+}
+
+// Simple bounding box collision check, 
+bool Salmon::collides_with(const Shark& shark)
+{
+	float dx = m_position.x - shark.get_position().x;
+	float dy = m_position.y - shark.get_position().y;
+	float d_sq = dx * dx + dy * dy;
+	float other_r = std::max(shark.get_bounding_box().x, shark.get_bounding_box().y);
 	float my_r = std::max(m_scale.x, m_scale.y);
 	float r = std::max(other_r, my_r);
 	r *= 0.6f;
@@ -362,7 +378,7 @@ float Salmon::calc_angle(double p1, double p2, double xpos, double ypos) {
 	return -angle;
 }
 
-// Called when the salmon collides with a turtle
+// Called when the salmon collides with a turtle or a shark
 void Salmon::kill()
 {
 	m_is_alive = false;

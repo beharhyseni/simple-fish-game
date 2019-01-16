@@ -1,0 +1,150 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CodeBlocks_project_file>
+	<FileVersion major="1" minor="6"/>
+	<Project>
+		<Option title="436d"/>
+		<Option makefile_is_custom="1"/>
+		<Option compiler="msvc8"/>
+		<Option virtualFolders="CMake Files\;CMake Files\src\;"/>
+		<Build>
+			<Target title="all">
+				<Option working_dir="C:/Users/behar/OneDrive/SimpleFishGame/cmake-build-debug"/>
+				<Option type="4"/>
+				<MakeCommands>
+					<Build command="nmake /NOLOGO /f C:\Users\behar\OneDrive\SimpleFishGame\cmake-build-debug\Makefile VERBOSE=1 all"/>
+					<CompileFile command="nmake /NOLOGO /f C:\Users\behar\OneDrive\SimpleFishGame\cmake-build-debug\Makefile VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="nmake /NOLOGO /f C:\Users\behar\OneDrive\SimpleFishGame\cmake-build-debug\Makefile VERBOSE=1 clean"/>
+					<DistClean command="nmake /NOLOGO /f C:\Users\behar\OneDrive\SimpleFishGame\cmake-build-debug\Makefile VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="436d">
+				<Option output="C:/Users/behar/OneDrive/SimpleFishGame/cmake-build-debug/436d.exe" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="C:/Users/behar/OneDrive/SimpleFishGame/cmake-build-debug"/>
+				<Option object_output="./"/>
+				<Option type="1"/>
+				<Option compiler="msvc8"/>
+				<Compiler>
+					<Add directory="C:/Users/behar/OneDrive/SimpleFishGame/src"/>
+					<Add directory="C:/Users/behar/OneDrive/SimpleFishGame/ext/stb_image"/>
+					<Add directory="C:/Users/behar/OneDrive/SimpleFishGame/ext/gl3w"/>
+					<Add directory="C:/Users/behar/OneDrive/SimpleFishGame/ext/glfw/include"/>
+					<Add directory="C:/Users/behar/OneDrive/SimpleFishGame/ext/sdl/include/SDL"/>
+					<Add directory="C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\VC\Tools\MSVC\14.16.27023\ATLMFC\include"/>
+					<Add directory="C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\VC\Tools\MSVC\14.16.27023\include"/>
+					<Add directory="C:\Program Files (x86)\Windows Kits\10\include\10.0.17763.0\ucrt"/>
+					<Add directory="C:\Program Files (x86)\Windows Kits\10\include\10.0.17763.0\shared"/>
+					<Add directory="C:\Program Files (x86)\Windows Kits\10\include\10.0.17763.0\um"/>
+					<Add directory="C:\Program Files (x86)\Windows Kits\10\include\10.0.17763.0\winrt"/>
+					<Add directory="C:\Program Files (x86)\Windows Kits\10\include\10.0.17763.0\cppwinrt"/>
+				</Compiler>
+				<MakeCommands>
+					<Build command="nmake /NOLOGO /f C:\Users\behar\OneDrive\SimpleFishGame\cmake-build-debug\Makefile VERBOSE=1 436d"/>
+					<CompileFile command="nmake /NOLOGO /f C:\Users\behar\OneDrive\SimpleFishGame\cmake-build-debug\Makefile VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="nmake /NOLOGO /f C:\Users\behar\OneDrive\SimpleFishGame\cmake-build-debug\Makefile VERBOSE=1 clean"/>
+					<DistClean command="nmake /NOLOGO /f C:\Users\behar\OneDrive\SimpleFishGame\cmake-build-debug\Makefile VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="436d/fast">
+				<Option output="C:/Users/behar/OneDrive/SimpleFishGame/cmake-build-debug/436d.exe" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="C:/Users/behar/OneDrive/SimpleFishGame/cmake-build-debug"/>
+				<Option object_output="./"/>
+				<Option type="1"/>
+				<Option compiler="msvc8"/>
+				<Compiler>
+					<Add directory="C:/Users/behar/OneDrive/SimpleFishGame/src"/>
+					<Add directory="C:/Users/behar/OneDrive/SimpleFishGame/ext/stb_image"/>
+					<Add directory="C:/Users/behar/OneDrive/SimpleFishGame/ext/gl3w"/>
+					<Add directory="C:/Users/behar/OneDrive/SimpleFishGame/ext/glfw/include"/>
+					<Add directory="C:/Users/behar/OneDrive/SimpleFishGame/ext/sdl/include/SDL"/>
+					<Add directory="C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\VC\Tools\MSVC\14.16.27023\ATLMFC\include"/>
+					<Add directory="C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\VC\Tools\MSVC\14.16.27023\include"/>
+					<Add directory="C:\Program Files (x86)\Windows Kits\10\include\10.0.17763.0\ucrt"/>
+					<Add directory="C:\Program Files (x86)\Windows Kits\10\include\10.0.17763.0\shared"/>
+					<Add directory="C:\Program Files (x86)\Windows Kits\10\include\10.0.17763.0\um"/>
+					<Add directory="C:\Program Files (x86)\Windows Kits\10\include\10.0.17763.0\winrt"/>
+					<Add directory="C:\Program Files (x86)\Windows Kits\10\include\10.0.17763.0\cppwinrt"/>
+				</Compiler>
+				<MakeCommands>
+					<Build command="nmake /NOLOGO /f C:\Users\behar\OneDrive\SimpleFishGame\cmake-build-debug\Makefile VERBOSE=1 436d/fast"/>
+					<CompileFile command="nmake /NOLOGO /f C:\Users\behar\OneDrive\SimpleFishGame\cmake-build-debug\Makefile VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="nmake /NOLOGO /f C:\Users\behar\OneDrive\SimpleFishGame\cmake-build-debug\Makefile VERBOSE=1 clean"/>
+					<DistClean command="nmake /NOLOGO /f C:\Users\behar\OneDrive\SimpleFishGame\cmake-build-debug\Makefile VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="edit_cache">
+				<Option working_dir="C:/Users/behar/OneDrive/SimpleFishGame/cmake-build-debug"/>
+				<Option type="4"/>
+				<MakeCommands>
+					<Build command="nmake /NOLOGO /f C:\Users\behar\OneDrive\SimpleFishGame\cmake-build-debug\Makefile VERBOSE=1 edit_cache"/>
+					<CompileFile command="nmake /NOLOGO /f C:\Users\behar\OneDrive\SimpleFishGame\cmake-build-debug\Makefile VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="nmake /NOLOGO /f C:\Users\behar\OneDrive\SimpleFishGame\cmake-build-debug\Makefile VERBOSE=1 clean"/>
+					<DistClean command="nmake /NOLOGO /f C:\Users\behar\OneDrive\SimpleFishGame\cmake-build-debug\Makefile VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="rebuild_cache">
+				<Option working_dir="C:/Users/behar/OneDrive/SimpleFishGame/cmake-build-debug"/>
+				<Option type="4"/>
+				<MakeCommands>
+					<Build command="nmake /NOLOGO /f C:\Users\behar\OneDrive\SimpleFishGame\cmake-build-debug\Makefile VERBOSE=1 rebuild_cache"/>
+					<CompileFile command="nmake /NOLOGO /f C:\Users\behar\OneDrive\SimpleFishGame\cmake-build-debug\Makefile VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="nmake /NOLOGO /f C:\Users\behar\OneDrive\SimpleFishGame\cmake-build-debug\Makefile VERBOSE=1 clean"/>
+					<DistClean command="nmake /NOLOGO /f C:\Users\behar\OneDrive\SimpleFishGame\cmake-build-debug\Makefile VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+		</Build>
+		<Unit filename="C:/Users/behar/OneDrive/SimpleFishGame/src/a1.cpp">
+			<Option target="436d"/>
+		</Unit>
+		<Unit filename="C:/Users/behar/OneDrive/SimpleFishGame/src/common.cpp">
+			<Option target="436d"/>
+		</Unit>
+		<Unit filename="C:/Users/behar/OneDrive/SimpleFishGame/src/common.hpp">
+			<Option target="436d"/>
+		</Unit>
+		<Unit filename="C:/Users/behar/OneDrive/SimpleFishGame/src/fish.cpp">
+			<Option target="436d"/>
+		</Unit>
+		<Unit filename="C:/Users/behar/OneDrive/SimpleFishGame/src/fish.hpp">
+			<Option target="436d"/>
+		</Unit>
+		<Unit filename="C:/Users/behar/OneDrive/SimpleFishGame/src/project_path.hpp">
+			<Option target="436d"/>
+		</Unit>
+		<Unit filename="C:/Users/behar/OneDrive/SimpleFishGame/src/salmon.cpp">
+			<Option target="436d"/>
+		</Unit>
+		<Unit filename="C:/Users/behar/OneDrive/SimpleFishGame/src/salmon.hpp">
+			<Option target="436d"/>
+		</Unit>
+		<Unit filename="C:/Users/behar/OneDrive/SimpleFishGame/src/shark.cpp">
+			<Option target="436d"/>
+		</Unit>
+		<Unit filename="C:/Users/behar/OneDrive/SimpleFishGame/src/shark.hpp">
+			<Option target="436d"/>
+		</Unit>
+		<Unit filename="C:/Users/behar/OneDrive/SimpleFishGame/src/turtle.cpp">
+			<Option target="436d"/>
+		</Unit>
+		<Unit filename="C:/Users/behar/OneDrive/SimpleFishGame/src/turtle.hpp">
+			<Option target="436d"/>
+		</Unit>
+		<Unit filename="C:/Users/behar/OneDrive/SimpleFishGame/src/water.cpp">
+			<Option target="436d"/>
+		</Unit>
+		<Unit filename="C:/Users/behar/OneDrive/SimpleFishGame/src/water.hpp">
+			<Option target="436d"/>
+		</Unit>
+		<Unit filename="C:/Users/behar/OneDrive/SimpleFishGame/src/world.cpp">
+			<Option target="436d"/>
+		</Unit>
+		<Unit filename="C:/Users/behar/OneDrive/SimpleFishGame/src/world.hpp">
+			<Option target="436d"/>
+		</Unit>
+		<Unit filename="C:/Users/behar/OneDrive/SimpleFishGame/CMakeLists.txt">
+			<Option virtualFolder="CMake Files\"/>
+		</Unit>
+		<Unit filename="C:/Users/behar/OneDrive/SimpleFishGame/src/project_path.hpp.in">
+			<Option virtualFolder="CMake Files\src\"/>
+		</Unit>
+	</Project>
+</CodeBlocks_project_file>
