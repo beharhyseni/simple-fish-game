@@ -8,6 +8,7 @@
 #include "water.hpp"
 #include "shark.hpp"
 #include "puffer.hpp"
+#include "whale.hpp"
 
 
 // stlib
@@ -55,6 +56,9 @@ private:
 	// Generates a new puffer
 	bool spawn_puffer();
 
+	// Generates a new puffer
+	bool spawn_whale();
+
 
 	// !!! INPUT CALLBACK FUNCTIONS
 	void on_key(GLFWwindow*, int key, int, int action, int mod);
@@ -81,12 +85,14 @@ private:
 	std::vector<Fish> m_fish;
 	std::vector<Shark> m_sharks;
 	std::vector<Puffer> m_puffer;
+	std::vector<Whale> m_whales;
 
 	float m_current_speed;
 	float m_next_turtle_spawn;
 	float m_next_fish_spawn;
 	float m_next_shark_spawn;
 	float m_next_puffer_spawn;
+	float m_next_whale_spawn;
 	
 	Mix_Music* m_background_music;
 	Mix_Chunk* m_salmon_dead_sound;

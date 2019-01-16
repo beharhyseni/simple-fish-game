@@ -6,6 +6,7 @@
 #include "fish.hpp"
 #include "shark.hpp"
 #include "puffer.hpp"
+#include "whale.hpp"
 
 // stlib
 #include <vector>
@@ -251,6 +252,20 @@ bool Salmon::collides_with(const Turtle& turtle)
 	return false;
 }
 
+bool Salmon::collides_with(const Fish& fish)
+{
+	float dx = m_position.x - fish.get_position().x;
+	float dy = m_position.y - fish.get_position().y;
+	float d_sq = dx * dx + dy * dy;
+	float other_r = std::max(fish.get_bounding_box().x, fish.get_bounding_box().y);
+	float my_r = std::max(m_scale.x, m_scale.y);
+	float r = std::max(other_r, my_r);
+	r *= 0.6f;
+	if (d_sq < r * r)
+		return true;
+	return false;
+}
+
 // Simple bounding box collision check, 
 bool Salmon::collides_with(const Shark& shark)
 {
@@ -280,19 +295,21 @@ bool Salmon::collides_with(const Puffer& puffer)
 	return false;
 }
 
-bool Salmon::collides_with(const Fish& fish)
+// Simple bounding box collision check, 
+bool Salmon::collides_with(const Whale& whale)
 {
-	float dx = m_position.x - fish.get_position().x;
-	float dy = m_position.y - fish.get_position().y;
+	float dx = m_position.x - whale.get_position().x;
+	float dy = m_position.y - whale.get_position().y;
 	float d_sq = dx * dx + dy * dy;
-	float other_r = std::max(fish.get_bounding_box().x, fish.get_bounding_box().y);
+	float other_r = std::max(whale.get_bounding_box().x, whale.get_bounding_box().y);
 	float my_r = std::max(m_scale.x, m_scale.y);
 	float r = std::max(other_r, my_r);
-	r *= 0.6f;
+	r *= 0.33f;
 	if (d_sq < r * r)
 		return true;
 	return false;
 }
+
 
 vec2 Salmon::get_position()const
 {
