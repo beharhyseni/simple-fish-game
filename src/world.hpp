@@ -7,6 +7,7 @@
 #include "fish.hpp"
 #include "water.hpp"
 #include "shark.hpp"
+#include "puffer.hpp"
 
 
 // stlib
@@ -44,12 +45,16 @@ public:
 private:
 	// Generates a new turtle
 	bool spawn_turtle();
-	
-	// Generates a new shark
-	bool spawn_shark();
 
 	// Generates a new fish
-	bool spawn_fish();
+	bool spawn_fish();	
+
+	// Generates a new shark
+	bool spawn_shark();
+	
+	// Generates a new puffer
+	bool spawn_puffer();
+
 
 	// !!! INPUT CALLBACK FUNCTIONS
 	void on_key(GLFWwindow*, int key, int, int action, int mod);
@@ -73,13 +78,15 @@ private:
 	// Game entities
 	Salmon m_salmon;
 	std::vector<Turtle> m_turtles;
-	std::vector<Shark> m_sharks;
 	std::vector<Fish> m_fish;
+	std::vector<Shark> m_sharks;
+	std::vector<Puffer> m_puffer;
 
 	float m_current_speed;
 	float m_next_turtle_spawn;
-	float m_next_shark_spawn;
 	float m_next_fish_spawn;
+	float m_next_shark_spawn;
+	float m_next_puffer_spawn;
 	
 	Mix_Music* m_background_music;
 	Mix_Chunk* m_salmon_dead_sound;

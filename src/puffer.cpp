@@ -1,25 +1,25 @@
 // Header
-#include "shark.hpp"
+#include "puffer.hpp"
 
 #include <cmath>
 
-Texture Shark::shark_texture;
+Texture Puffer::puffer_texture;
 
-bool Shark::init()
+bool Puffer::init()
 {
 	// Load shared texture
-	if (!shark_texture.is_valid())
+	if (!puffer_texture.is_valid())
 	{
-		if (!shark_texture.load_from_file(textures_path("shark4.png")))
+		if (!puffer_texture.load_from_file(textures_path("puffer.png")))
 		{
-			fprintf(stderr, "Failed to load shark texture!");
+			fprintf(stderr, "Failed to load puffer texture!");
 			return false;
 		}
 	}
 
 	// The position corresponds to the center of the texture
-	float wr = shark_texture.width * 0.5f;
-	float hr = shark_texture.height * 0.5f;
+	float wr = puffer_texture.width * 0.5f;
+	float hr = puffer_texture.height * 0.5f;
 
 	TexturedVertex vertices[4];
 	vertices[0].position = { -wr, +hr, -0.02f };
@@ -58,8 +58,8 @@ bool Shark::init()
 
 	// Setting initial values, scale is negative to make it face the opposite way
 	// 1.0 would be as big as the original texture
-	m_scale.x = -0.5f;
-	m_scale.y = 0.5f;
+	m_scale.x = 0.18f;
+	m_scale.y = 0.18f;
 	m_rotation = 0.f;
 
 	return true;
@@ -67,7 +67,7 @@ bool Shark::init()
 
 // Call if init() was successful
 // Releases all graphics resources
-void Shark::destroy()
+void Puffer::destroy()
 {
 	glDeleteBuffers(1, &mesh.vbo);
 	glDeleteBuffers(1, &mesh.ibo);
@@ -78,16 +78,16 @@ void Shark::destroy()
 	glDeleteShader(effect.program);
 }
 
-void Shark::update(float ms)
+void Puffer::update(float ms)
 {
 	// Move fish along -X based on how much time has passed, this is to (partially) avoid
 	// having entities move at different speed based on the machine.
-	const float SHARK_SPEED = 450.f;
-	float step = -SHARK_SPEED * (ms / 1000);
+	const float PUFFER_SPEED = 100.f;
+	float step = -PUFFER_SPEED * (ms / 1000);
 	m_position.x += step;
 }
 
-void Shark::draw(const mat3& projection)
+void Puffer::draw(const mat3& projection)
 {
 	// Transformation code, see Rendering and Transformation in the template specification for more info
 	// Incrementally updates transformation matrix, thus ORDER IS IMPORTANT
@@ -124,7 +124,7 @@ void Shark::draw(const mat3& projection)
 
 	// Enabling and binding texture to slot 0
 	glActiveTexture(GL_TEXTURE0);
-	glBindTexture(GL_TEXTURE_2D, shark_texture.id);
+	glBindTexture(GL_TEXTURE_2D, puffer_texture.id);
 
 	// Setting uniform values to the currently bound program
 	glUniformMatrix3fv(transform_uloc, 1, GL_FALSE, (float*)&transform);
@@ -136,19 +136,19 @@ void Shark::draw(const mat3& projection)
 	glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_SHORT, nullptr);
 }
 
-vec2 Shark::get_position()const
+vec2 Puffer::get_position()const
 {
 	return m_position;
 }
 
-void Shark::set_position(vec2 position)
+void Puffer::set_position(vec2 position)
 {
 	m_position = position;
 }
 
-// Returns the local bounding coordinates scaled by the current size of the shark 
-vec2 Shark::get_bounding_box()const
+// Returns the local bounding coordinates scaled by the current size of the puffer 
+vec2 Puffer::get_bounding_box()const
 {
 	// fabs is to avoid negative scale due to the facing direction
-	return { std::fabs(m_scale.x) * shark_texture.width, std::fabs(m_scale.y) * shark_texture.height };
+	return { std::fabs(m_scale.x) * puffer_texture.width, std::fabs(m_scale.y) * puffer_texture.height };
 }

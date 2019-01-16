@@ -10,11 +10,13 @@
 namespace
 {
 	const size_t MAX_TURTLES = 15;
-	const size_t MAX_SHARKS = 10;
-	const size_t MAX_FISH = 5;
+	const size_t MAX_SHARKS = 4;
+	const size_t MAX_PUFFER = 7;
+	const size_t MAX_FISH = 8;
 	const size_t TURTLE_DELAY_MS = 2000;
-	const size_t SHARK_DELAY_MS = 3000;
+	const size_t SHARK_DELAY_MS = 6000;
 	const size_t FISH_DELAY_MS = 5000;
+	const size_t PUFFER_DELAY_MS = 4000;
 
 	namespace
 	{
@@ -29,7 +31,8 @@ World::World() :
 	m_points(0),
 	m_next_turtle_spawn(0.f),
 	m_next_fish_spawn(0.f),
-	m_next_shark_spawn(0.f)
+	m_next_shark_spawn(0.f),
+	m_next_puffer_spawn(0.f)
 {
 	// Seeding rng with random device
 	m_rng = std::default_random_engine(std::random_device()());
@@ -143,15 +146,23 @@ void World::destroy()
 	for (auto& turtle : m_turtles)
 		turtle.destroy();
 
-	for (auto& shark : m_sharks)
-		shark.destroy();
 
 
 	for (auto& fish : m_fish)
 		fish.destroy();
-	m_turtles.clear();
-	m_sharks.clear();
+
+	for (auto& shark : m_sharks)
+		shark.destroy();
+	
+	for (auto& puffer : m_puffer)
+		puffer.destroy();
+
+
+	m_turtles.clear();	
 	m_fish.clear();
+	m_sharks.clear();
+	m_puffer.clear();
+
 
 	glfwDestroyWindow(m_window);
 }
@@ -177,20 +188,7 @@ bool World::update(float elapsed_ms)
 		}
 	}
 
-	// Checking Salmon - Shark collisions
-	for (const auto& shark : m_sharks)
-	{
-		if (m_salmon.collides_with(shark))
-		{
-			if (m_salmon.is_alive()) {
-				Mix_PlayChannel(-1, m_salmon_dead_sound, 0);
-				m_water.set_salmon_dead();
-			}
-			m_salmon.kill();
-			break;
-		}
-	}
-
+	
 	// Checking Salmon - Fish collisions
 	auto fish_it = m_fish.begin();
 	while (fish_it != m_fish.end())
@@ -211,16 +209,45 @@ bool World::update(float elapsed_ms)
 
 	}
 	
-	
+	// Checking Salmon - Shark collisions
+	for (const auto& shark : m_sharks)
+	{
+		if (m_salmon.collides_with(shark))
+		{
+			if (m_salmon.is_alive()) {
+				Mix_PlayChannel(-1, m_salmon_dead_sound, 0);
+				m_water.set_salmon_dead();
+			}
+			m_salmon.kill();
+			break;
+		}
+	}
+	// Checking Salmon - Puffer collisions
+	for (const auto& puffer : m_puffer)
+	{
+		if (m_salmon.collides_with(puffer))
+		{
+			if (m_salmon.is_alive()) {
+				Mix_PlayChannel(-1, m_salmon_dead_sound, 0);
+				m_water.set_salmon_dead();
+			}
+			m_salmon.kill();
+			break;
+		}
+	}
+
 	// Updating all entities, making the turtle, shark and fish
 	// faster based on current
 	m_salmon.update(elapsed_ms);
 	for (auto& turtle : m_turtles)
 		turtle.update(elapsed_ms * m_current_speed);
-	for (auto& shark : m_sharks)
-		shark.update(elapsed_ms * m_current_speed);
+
 	for (auto& fish : m_fish)
 		fish.update(elapsed_ms * m_current_speed);
+	for (auto& shark : m_sharks)
+		shark.update(elapsed_ms * m_current_speed);
+	for (auto& puffer : m_puffer)
+		puffer.update(elapsed_ms * m_current_speed);
 
 	// Removing out of screen turtles
 	auto turtle_it = m_turtles.begin();
@@ -235,19 +262,6 @@ bool World::update(float elapsed_ms)
 
 		++turtle_it;
 	}
-	// Removing out of screen sharks
-	auto shark_it = m_sharks.begin();
-	while (shark_it != m_sharks.end())
-	{
-		float w = shark_it->get_bounding_box().x / 2;
-		if (shark_it->get_position().x + w < 0.f)
-		{
-			shark_it = m_sharks.erase(shark_it);
-			continue;
-		}
-
-		++shark_it;
-	}
 
 	// Removing out of screen fish
 	fish_it = m_fish.begin();
@@ -261,6 +275,32 @@ bool World::update(float elapsed_ms)
 		}
 
 		++fish_it;
+	}
+	// Removing out of screen sharks
+	auto shark_it = m_sharks.begin();
+	while (shark_it != m_sharks.end())
+	{
+		float w = shark_it->get_bounding_box().x / 2;
+		if (shark_it->get_position().x + w < 0.f)
+		{
+			shark_it = m_sharks.erase(shark_it);
+			continue;
+		}
+
+		++shark_it;
+	}	
+	// Removing out of screen puffers
+	auto puffer_it = m_puffer.begin();
+	while (puffer_it != m_puffer.end())
+	{
+		float w = puffer_it->get_bounding_box().x / 2;
+		if (puffer_it->get_position().x + w < 0.f)
+		{
+			puffer_it = m_puffer.erase(puffer_it);
+			continue;
+		}
+
+		++puffer_it;
 	}
 
 	// Spawning new turtles
@@ -278,6 +318,20 @@ bool World::update(float elapsed_ms)
 		// Next spawn
 		m_next_turtle_spawn = (TURTLE_DELAY_MS / 2) + m_dist(m_rng) * (TURTLE_DELAY_MS/2);
 	}
+
+	// Spawning new fish
+	m_next_fish_spawn -= elapsed_ms * m_current_speed;
+	if (m_fish.size() <= MAX_FISH && m_next_fish_spawn < 0.f)
+	{
+		if (!spawn_fish())
+			return false;
+		Fish& new_fish = m_fish.back();
+
+		new_fish.set_position({ screen.x + 150, 50 + m_dist(m_rng) *  (screen.y - 100) });
+
+		m_next_fish_spawn = (FISH_DELAY_MS / 2) + m_dist(m_rng) * (FISH_DELAY_MS / 2);
+	}
+
 	// Spawning new sharks
 	m_next_shark_spawn -= elapsed_ms * m_current_speed;
 	if (m_sharks.size() <= MAX_SHARKS && m_next_shark_spawn < 0.f)
@@ -294,19 +348,21 @@ bool World::update(float elapsed_ms)
 		m_next_shark_spawn = (SHARK_DELAY_MS / 2) + m_dist(m_rng) * (SHARK_DELAY_MS/2);
 	}
 
-	// Spawning new fish
-	m_next_fish_spawn -= elapsed_ms * m_current_speed;
-	if (m_fish.size() <= MAX_FISH && m_next_fish_spawn < 0.f)
+		// Spawning new puffers
+	m_next_puffer_spawn -= elapsed_ms * m_current_speed;
+	if (m_puffer.size() <= MAX_PUFFER && m_next_puffer_spawn < 0.f)
 	{
-		if (!spawn_fish())
+		if (!spawn_puffer())
 			return false;
-		Fish& new_fish = m_fish.back();
 
-		new_fish.set_position({ screen.x + 150, 50 + m_dist(m_rng) *  (screen.y - 100) });
+		Puffer& new_puffer = m_puffer.back();
+	
+		// Setting random initial position
+		new_puffer.set_position({ screen.x + 150, 50 + m_dist(m_rng) * (screen.y - 100) });
 
-		m_next_fish_spawn = (FISH_DELAY_MS / 2) + m_dist(m_rng) * (FISH_DELAY_MS / 2);
+		// Next spawn
+		m_next_puffer_spawn = (PUFFER_DELAY_MS / 2) + m_dist(m_rng) * (PUFFER_DELAY_MS/2);
 	}
-
 	// If salmon is dead, restart the game after the fading animation
 	if (!m_salmon.is_alive() &&
 		m_water.get_salmon_dead_time() > 5) {
@@ -315,8 +371,9 @@ bool World::update(float elapsed_ms)
 		m_salmon.destroy();
 		m_salmon.init();
 		m_turtles.clear();
-		m_sharks.clear();
 		m_fish.clear();
+		m_sharks.clear();
+		m_puffer.clear();		
 		m_water.reset_salmon_dead_time();
 		m_current_speed = 1.f;
 	}
@@ -368,10 +425,13 @@ void World::draw()
 	// Drawing entities
 	for (auto& turtle : m_turtles)
 		turtle.draw(projection_2D);
-	for (auto& shark : m_sharks)
-		shark.draw(projection_2D);
+
 	for (auto& fish : m_fish)
 		fish.draw(projection_2D);
+		for (auto& shark : m_sharks)
+		shark.draw(projection_2D);
+	for (auto& puffer : m_puffer)
+		puffer.draw(projection_2D);
 	m_salmon.draw(projection_2D);
 
 
@@ -414,6 +474,19 @@ bool World::spawn_turtle()
 	fprintf(stderr, "Failed to spawn turtle");
 	return false;
 }
+
+// Creates a new fish and if successfull adds it to the list of fish
+bool World::spawn_fish()
+{
+	Fish fish;
+	if (fish.init())
+	{
+		m_fish.emplace_back(fish);
+		return true;
+	}
+	fprintf(stderr, "Failed to spawn fish");
+	return false;
+}
 // Creates a new shark and if successfull adds it to the list of sharks
 bool World::spawn_shark()
 {
@@ -426,17 +499,16 @@ bool World::spawn_shark()
 	fprintf(stderr, "Failed to spawn shark");
 	return false;
 }
-
-// Creates a new fish and if successfull adds it to the list of fish
-bool World::spawn_fish()
+// Creates a new puffer and if successfull adds it to the list of puffers
+bool World::spawn_puffer()
 {
-	Fish fish;
-	if (fish.init())
+	Puffer puffer;
+	if (puffer.init())
 	{
-		m_fish.emplace_back(fish);
+		m_puffer.emplace_back(puffer);
 		return true;
 	}
-	fprintf(stderr, "Failed to spawn fish");
+	fprintf(stderr, "Failed to spawn puffer");
 	return false;
 }
 
@@ -457,8 +529,10 @@ void World::on_key(GLFWwindow*, int key, int, int action, int mod)
 		m_salmon.destroy(); 
 		m_salmon.init();
 		m_turtles.clear();
+		m_fish.clear();	
 		m_sharks.clear();
-		m_fish.clear();
+		m_puffer.clear();
+	
 		m_water.reset_salmon_dead_time();
 		m_current_speed = 1.f;
 	}
