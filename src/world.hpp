@@ -9,6 +9,7 @@
 #include "shark.hpp"
 #include "puffer.hpp"
 #include "whale.hpp"
+#include "advturtle.hpp"
 
 
 // stlib
@@ -58,6 +59,9 @@ private:
 
 	// Generates a new puffer
 	bool spawn_whale();
+	
+	// Generates a new puffer
+	bool spawn_advturtle();
 
 
 	// !!! INPUT CALLBACK FUNCTIONS
@@ -86,6 +90,7 @@ private:
 	std::vector<Shark> m_sharks;
 	std::vector<Puffer> m_puffer;
 	std::vector<Whale> m_whales;
+	std::vector<AdvTurtle> m_advturtles;
 
 	float m_current_speed;
 	float m_next_turtle_spawn;
@@ -93,6 +98,7 @@ private:
 	float m_next_shark_spawn;
 	float m_next_puffer_spawn;
 	float m_next_whale_spawn;
+	float m_next_advturtle_spawn;
 	
 	Mix_Music* m_background_music;
 	Mix_Chunk* m_salmon_dead_sound;

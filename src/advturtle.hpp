@@ -3,10 +3,10 @@
 #include "common.hpp"
 
 // Salmon enemy 
-class Turtle : public Renderable
+class AdvTurtle : public Renderable
 {
-	// Shared between all turtles, no need to load one for each instance
-	static Texture turtle_texture;
+	// Shared between all advturtles, no need to load one for each instance
+	static Texture advturtle_texture;
 
 public:
 	// Creates all the associated render resources and default transform
@@ -31,7 +31,6 @@ public:
 
 	// Returns the turtle' bounding box for collision detection, called by collides_with()
 	vec2 get_bounding_box()const;
-
 
 private:
 	vec2 m_position; // Window coordinates

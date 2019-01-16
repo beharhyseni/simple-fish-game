@@ -7,6 +7,7 @@
 #include "shark.hpp"
 #include "puffer.hpp"
 #include "whale.hpp"
+#include "advturtle.hpp"
 
 // stlib
 #include <vector>
@@ -302,6 +303,21 @@ bool Salmon::collides_with(const Whale& whale)
 	float dy = m_position.y - whale.get_position().y;
 	float d_sq = dx * dx + dy * dy;
 	float other_r = std::max(whale.get_bounding_box().x, whale.get_bounding_box().y);
+	float my_r = std::max(m_scale.x, m_scale.y);
+	float r = std::max(other_r, my_r);
+	r *= 0.33f;
+	if (d_sq < r * r)
+		return true;
+	return false;
+}
+
+// Simple bounding box collision check, 
+bool Salmon::collides_with(const AdvTurtle& advturtle)
+{
+	float dx = m_position.x - advturtle.get_position().x;
+	float dy = m_position.y - advturtle.get_position().y;
+	float d_sq = dx * dx + dy * dy;
+	float other_r = std::max(advturtle.get_bounding_box().x, advturtle.get_bounding_box().y);
 	float my_r = std::max(m_scale.x, m_scale.y);
 	float r = std::max(other_r, my_r);
 	r *= 0.33f;

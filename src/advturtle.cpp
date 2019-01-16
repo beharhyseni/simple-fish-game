@@ -1,26 +1,26 @@
 // Header
-#include "turtle.hpp"
+#include "advturtle.hpp"
 
 #include <cmath>
 
-Texture Turtle::turtle_texture;
-bool Turtle::init()
+Texture AdvTurtle::advturtle_texture;
+bool AdvTurtle::init()
 {
 	// Load shared texture
-	if (!turtle_texture.is_valid())
+	if (!advturtle_texture.is_valid())
 	{ 
-			if (!turtle_texture.load_from_file(textures_path("turtle.png")))
+		
+			if (!advturtle_texture.load_from_file(textures_path("turtle1.png")))
 			{
-				fprintf(stderr, "Failed to load turtle texture!");
+				fprintf(stderr, "Failed to load advturtle texture!");
 				return false;
 			}
-
 		
 	}
 
 	// The position corresponds to the center of the texture
-	float wr = turtle_texture.width * 0.5f;
-	float hr = turtle_texture.height * 0.5f;
+	float wr = advturtle_texture.width * 0.5f;
+	float hr = advturtle_texture.height * 0.5f;
 
 	TexturedVertex vertices[4];
 	vertices[0].position = { -wr, +hr, -0.02f };
@@ -68,7 +68,7 @@ bool Turtle::init()
 
 // Call if init() was successful
 // Releases all graphics resources
-void Turtle::destroy()
+void AdvTurtle::destroy()
 {
 	glDeleteBuffers(1, &mesh.vbo);
 	glDeleteBuffers(1, &mesh.ibo);
@@ -79,7 +79,7 @@ void Turtle::destroy()
 	glDeleteShader(effect.program);
 }
 
-void Turtle::update(float ms)
+void AdvTurtle::update(float ms)
 {
 	// Move fish along -X based on how much time has passed, this is to (partially) avoid
 	// having entities move at different speed based on the machine.
@@ -88,7 +88,7 @@ void Turtle::update(float ms)
 	m_position.x += step;
 }
 
-void Turtle::draw(const mat3& projection)
+void AdvTurtle::draw(const mat3& projection)
 {
 	// Transformation code, see Rendering and Transformation in the template specification for more info
 	// Incrementally updates transformation matrix, thus ORDER IS IMPORTANT
@@ -125,7 +125,7 @@ void Turtle::draw(const mat3& projection)
 
 	// Enabling and binding texture to slot 0
 	glActiveTexture(GL_TEXTURE0);
-	glBindTexture(GL_TEXTURE_2D, turtle_texture.id);
+	glBindTexture(GL_TEXTURE_2D, advturtle_texture.id);
 
 	// Setting uniform values to the currently bound program
 	glUniformMatrix3fv(transform_uloc, 1, GL_FALSE, (float*)&transform);
@@ -137,19 +137,19 @@ void Turtle::draw(const mat3& projection)
 	glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_SHORT, nullptr);
 }
 
-vec2 Turtle::get_position()const
+vec2 AdvTurtle::get_position()const
 {
 	return m_position;
 }
 
-void Turtle::set_position(vec2 position)
+void AdvTurtle::set_position(vec2 position)
 {
 	m_position = position;
 }
 
-// Returns the local bounding coordinates scaled by the current size of the turtle 
-vec2 Turtle::get_bounding_box()const
+// Returns the local bounding coordinates scaled by the current size of the advturtle 
+vec2 AdvTurtle::get_bounding_box()const
 {
 	// fabs is to avoid negative scale due to the facing direction
-	return { std::fabs(m_scale.x) * turtle_texture.width, std::fabs(m_scale.y) * turtle_texture.height };
+	return { std::fabs(m_scale.x) * advturtle_texture.width, std::fabs(m_scale.y) * advturtle_texture.height };
 }

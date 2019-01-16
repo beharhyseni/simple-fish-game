@@ -7,6 +7,7 @@ class Fish;
 class Shark;
 class Puffer;
 class Whale;
+class AdvTurtle;
 
 class Salmon : public Renderable
 {
@@ -30,6 +31,7 @@ public:
 	bool collides_with(const Shark& shark);
 	bool collides_with(const Puffer& puffer);
 	bool collides_with(const Whale& whale);
+	bool collides_with(const AdvTurtle& advturtle);
 
 	// Returns the current salmon position
 	vec2 get_position()const;

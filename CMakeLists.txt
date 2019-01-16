@@ -41,6 +41,7 @@ set(SOURCE_FILES
 	src/shark.cpp
 	src/puffer.cpp
 	src/whale.cpp
+	src/advturtle.cpp
 
     src/project_path.hpp
 	src/common.hpp
@@ -52,6 +53,7 @@ set(SOURCE_FILES
 	src/shark.hpp
 	src/puffer.hpp
 	src/whale.hpp
+	src/advturtle.hpp
 	)
 
 add_executable(${PROJECT_NAME} ${SOURCE_FILES})
