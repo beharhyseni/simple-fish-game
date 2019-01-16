@@ -4,16 +4,26 @@
 #include <cmath>
 
 Texture Turtle::turtle_texture;
-
+bool advanced = false;
 bool Turtle::init()
 {
 	// Load shared texture
 	if (!turtle_texture.is_valid())
-	{
-		if (!turtle_texture.load_from_file(textures_path("turtle.png")))
-		{
-			fprintf(stderr, "Failed to load turtle texture!");
-			return false;
+	{ 
+		if (advanced) {
+			if (!turtle_texture.load_from_file(textures_path("turtle1.png")))
+			{
+				fprintf(stderr, "Failed to load turtle texture!");
+				return false;
+			}
+		}
+		else {
+			if (!turtle_texture.load_from_file(textures_path("turtle.png")))
+			{
+				fprintf(stderr, "Failed to load turtle texture!");
+				return false;
+			}
+
 		}
 	}
 
@@ -151,4 +161,8 @@ vec2 Turtle::get_bounding_box()const
 {
 	// fabs is to avoid negative scale due to the facing direction
 	return { std::fabs(m_scale.x) * turtle_texture.width, std::fabs(m_scale.y) * turtle_texture.height };
+}
+
+void Turtle::set_advanced(bool adv) {
+	advanced = adv;
 }

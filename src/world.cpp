@@ -19,6 +19,7 @@ namespace
 	const size_t FISH_DELAY_MS = 4000;
 	const size_t PUFFER_DELAY_MS = 4000;
 	const size_t WHALE_DELAY_MS = 8500;
+	bool advanced = false;
 
 	namespace
 	{
@@ -152,21 +153,24 @@ void World::destroy()
 	for (auto& fish : m_fish)
 		fish.destroy();
 
-	for (auto& shark : m_sharks)
-		shark.destroy();
-	
-	for (auto& puffer : m_puffer)
-		puffer.destroy();
-		
-	for (auto& whale : m_whales)
-		whale.destroy();
+	if (advanced) {
+		for (auto& shark : m_sharks)
+			shark.destroy();
 
+		for (auto& puffer : m_puffer)
+			puffer.destroy();
+
+		for (auto& whale : m_whales)
+			whale.destroy();
+	}
 
 	m_turtles.clear();	
 	m_fish.clear();
-	m_sharks.clear();
-	m_puffer.clear();
-	m_whales.clear();
+	if (advanced) {
+		m_sharks.clear();
+		m_puffer.clear();
+		m_whales.clear();
+	}
 
 
 	glfwDestroyWindow(m_window);
@@ -214,45 +218,47 @@ bool World::update(float elapsed_ms)
 
 	}
 	
-	// Checking Salmon - Shark collisions
-	for (const auto& shark : m_sharks)
-	{
-		if (m_salmon.collides_with(shark))
+	if (advanced) {
+		// Checking Salmon - Shark collisions
+		for (const auto& shark : m_sharks)
 		{
-			if (m_salmon.is_alive()) {
-				Mix_PlayChannel(-1, m_salmon_dead_sound, 0);
-				m_water.set_salmon_dead();
+			if (m_salmon.collides_with(shark))
+			{
+				if (m_salmon.is_alive()) {
+					Mix_PlayChannel(-1, m_salmon_dead_sound, 0);
+					m_water.set_salmon_dead();
+				}
+				m_salmon.kill();
+				break;
 			}
-			m_salmon.kill();
-			break;
 		}
-	}
 
-	// Checking Salmon - Puffer collisions
-	for (const auto& puffer : m_puffer)
-	{
-		if (m_salmon.collides_with(puffer))
+		// Checking Salmon - Puffer collisions
+		for (const auto& puffer : m_puffer)
 		{
-			if (m_salmon.is_alive()) {
-				Mix_PlayChannel(-1, m_salmon_dead_sound, 0);
-				m_water.set_salmon_dead();
+			if (m_salmon.collides_with(puffer))
+			{
+				if (m_salmon.is_alive()) {
+					Mix_PlayChannel(-1, m_salmon_dead_sound, 0);
+					m_water.set_salmon_dead();
+				}
+				m_salmon.kill();
+				break;
 			}
-			m_salmon.kill();
-			break;
 		}
-	}
 
 		// Checking Salmon - Whale collisions
-	for (const auto& whale : m_whales)
-	{
-		if (m_salmon.collides_with(whale))
+		for (const auto& whale : m_whales)
 		{
-			if (m_salmon.is_alive()) {
-				Mix_PlayChannel(-1, m_salmon_dead_sound, 0);
-				m_water.set_salmon_dead();
+			if (m_salmon.collides_with(whale))
+			{
+				if (m_salmon.is_alive()) {
+					Mix_PlayChannel(-1, m_salmon_dead_sound, 0);
+					m_water.set_salmon_dead();
+				}
+				m_salmon.kill();
+				break;
 			}
-			m_salmon.kill();
-			break;
 		}
 	}
 
@@ -264,13 +270,15 @@ bool World::update(float elapsed_ms)
 
 	for (auto& fish : m_fish)
 		fish.update(elapsed_ms * m_current_speed);
-	for (auto& shark : m_sharks)
-		shark.update(elapsed_ms * m_current_speed);
-	for (auto& puffer : m_puffer)
-		puffer.update(elapsed_ms * m_current_speed);
-	for (auto& whale : m_whales)
-		whale.update(elapsed_ms * m_current_speed);
 
+	if (advanced) {
+		for (auto& shark : m_sharks)
+			shark.update(elapsed_ms * m_current_speed);
+		for (auto& puffer : m_puffer)
+			puffer.update(elapsed_ms * m_current_speed);
+		for (auto& whale : m_whales)
+			whale.update(elapsed_ms * m_current_speed);
+	}
 	// Removing out of screen turtles
 	auto turtle_it = m_turtles.begin();
 	while (turtle_it != m_turtles.end())
@@ -298,46 +306,49 @@ bool World::update(float elapsed_ms)
 
 		++fish_it;
 	}
-	// Removing out of screen sharks
-	auto shark_it = m_sharks.begin();
-	while (shark_it != m_sharks.end())
-	{
-		float w = shark_it->get_bounding_box().x / 2;
-		if (shark_it->get_position().x + w < 0.f)
+
+	if (advanced) {
+		// Removing out of screen sharks
+		auto shark_it = m_sharks.begin();
+		while (shark_it != m_sharks.end())
 		{
-			shark_it = m_sharks.erase(shark_it);
-			continue;
+			float w = shark_it->get_bounding_box().x / 2;
+			if (shark_it->get_position().x + w < 0.f)
+			{
+				shark_it = m_sharks.erase(shark_it);
+				continue;
+			}
+
+			++shark_it;
 		}
 
-		++shark_it;
-	}	
-
-	// Removing out of screen puffers
-	auto puffer_it = m_puffer.begin();
-	while (puffer_it != m_puffer.end())
-	{
-		float w = puffer_it->get_bounding_box().x / 2;
-		if (puffer_it->get_position().x + w < 0.f)
+		// Removing out of screen puffers
+		auto puffer_it = m_puffer.begin();
+		while (puffer_it != m_puffer.end())
 		{
-			puffer_it = m_puffer.erase(puffer_it);
-			continue;
+			float w = puffer_it->get_bounding_box().x / 2;
+			if (puffer_it->get_position().x + w < 0.f)
+			{
+				puffer_it = m_puffer.erase(puffer_it);
+				continue;
+			}
+
+			++puffer_it;
 		}
 
-		++puffer_it;
-	}
-	
-	// Removing out of screen puffers
-	auto whale_it = m_whales.begin();
-	while (whale_it != m_whales.end())
-	{
-		float w = whale_it->get_bounding_box().x / 2;
-		if (whale_it->get_position().x + w < 0.f)
+		// Removing out of screen puffers
+		auto whale_it = m_whales.begin();
+		while (whale_it != m_whales.end())
 		{
-			whale_it = m_whales.erase(whale_it);
-			continue;
-		}
+			float w = whale_it->get_bounding_box().x / 2;
+			if (whale_it->get_position().x + w < 0.f)
+			{
+				whale_it = m_whales.erase(whale_it);
+				continue;
+			}
 
-		++whale_it;
+			++whale_it;
+		}
 	}
 
 	// Spawning new turtles
@@ -346,7 +357,6 @@ bool World::update(float elapsed_ms)
 	{
 		if (!spawn_turtle())
 			return false;
-
 		Turtle& new_turtle = m_turtles.back();
 	
 		// Setting random initial position
@@ -369,51 +379,53 @@ bool World::update(float elapsed_ms)
 		m_next_fish_spawn = (FISH_DELAY_MS / 2) + m_dist(m_rng) * (FISH_DELAY_MS / 2);
 	}
 
-	// Spawning new sharks
-	m_next_shark_spawn -= elapsed_ms * m_current_speed;
-	if (m_sharks.size() <= MAX_SHARKS && m_next_shark_spawn < 0.f)
-	{
-		if (!spawn_shark())
-			return false;
+	if (advanced) {
+		// Spawning new sharks
+		m_next_shark_spawn -= elapsed_ms * m_current_speed;
+		if (m_sharks.size() <= MAX_SHARKS && m_next_shark_spawn < 0.f)
+		{
+			if (!spawn_shark())
+				return false;
 
-		Shark& new_shark = m_sharks.back();
-	
-		// Setting random initial position
-		new_shark.set_position({ screen.x + 150, 50 + m_dist(m_rng) * (screen.y - 100) });
+			Shark& new_shark = m_sharks.back();
 
-		// Next spawn
-		m_next_shark_spawn = (SHARK_DELAY_MS / 2) + m_dist(m_rng) * (SHARK_DELAY_MS/2);
-	}
+			// Setting random initial position
+			new_shark.set_position({ screen.x + 150, 50 + m_dist(m_rng) * (screen.y - 100) });
+
+			// Next spawn
+			m_next_shark_spawn = (SHARK_DELAY_MS / 2) + m_dist(m_rng) * (SHARK_DELAY_MS / 2);
+		}
 
 		// Spawning new puffers
-	m_next_puffer_spawn -= elapsed_ms * m_current_speed;
-	if (m_puffer.size() <= MAX_PUFFER && m_next_puffer_spawn < 0.f)
-	{
-		if (!spawn_puffer())
-			return false;
+		m_next_puffer_spawn -= elapsed_ms * m_current_speed;
+		if (m_puffer.size() <= MAX_PUFFER && m_next_puffer_spawn < 0.f)
+		{
+			if (!spawn_puffer())
+				return false;
 
-		Puffer& new_puffer = m_puffer.back();
-	
-		// Setting random initial position
-		new_puffer.set_position({ screen.x + 150, 50 + m_dist(m_rng) * (screen.y - 100) });
+			Puffer& new_puffer = m_puffer.back();
 
-		// Next spawn
-		m_next_puffer_spawn = (PUFFER_DELAY_MS / 2) + m_dist(m_rng) * (PUFFER_DELAY_MS/2);
-	}
+			// Setting random initial position
+			new_puffer.set_position({ screen.x + 150, 50 + m_dist(m_rng) * (screen.y - 100) });
+
+			// Next spawn
+			m_next_puffer_spawn = (PUFFER_DELAY_MS / 2) + m_dist(m_rng) * (PUFFER_DELAY_MS / 2);
+		}
 		// Spawning new whales
-	m_next_whale_spawn -= elapsed_ms * m_current_speed;
-	if (m_whales.size() <= MAX_WHALE && m_next_whale_spawn < 0.f)
-	{
-		if (!spawn_whale())
-			return false;
+		m_next_whale_spawn -= elapsed_ms * m_current_speed;
+		if (m_whales.size() <= MAX_WHALE && m_next_whale_spawn < 0.f)
+		{
+			if (!spawn_whale())
+				return false;
 
-		Whale& new_whale = m_whales.back();
-	
-		// Setting random initial position
-		new_whale.set_position({ screen.x + 150, 50 + m_dist(m_rng) * (screen.y - 100) });
+			Whale& new_whale = m_whales.back();
 
-		// Next spawn
-		m_next_whale_spawn = (WHALE_DELAY_MS / 2) + m_dist(m_rng) * (WHALE_DELAY_MS/2);
+			// Setting random initial position
+			new_whale.set_position({ screen.x + 150, 50 + m_dist(m_rng) * (screen.y - 100) });
+
+			// Next spawn
+			m_next_whale_spawn = (WHALE_DELAY_MS / 2) + m_dist(m_rng) * (WHALE_DELAY_MS / 2);
+		}
 	}
 	// If salmon is dead, restart the game after the fading animation
 	if (!m_salmon.is_alive() &&
@@ -424,9 +436,12 @@ bool World::update(float elapsed_ms)
 		m_salmon.init();
 		m_turtles.clear();
 		m_fish.clear();
-		m_sharks.clear();
-		m_puffer.clear();		
-		m_whales.clear();		
+
+		if (advanced) {
+			m_sharks.clear();
+			m_puffer.clear();
+			m_whales.clear();
+		}
 		m_water.reset_salmon_dead_time();
 		m_current_speed = 1.f;
 	}
@@ -481,15 +496,17 @@ void World::draw()
 
 	for (auto& fish : m_fish)
 		fish.draw(projection_2D);
+
+	if (advanced) {
 		for (auto& shark : m_sharks)
-		shark.draw(projection_2D);
+			shark.draw(projection_2D);
 
-	for (auto& puffer : m_puffer)
-		puffer.draw(projection_2D);
-	
-	for (auto& whale : m_whales)
-		whale.draw(projection_2D);
+		for (auto& puffer : m_puffer)
+			puffer.draw(projection_2D);
 
+		for (auto& whale : m_whales)
+			whale.draw(projection_2D);
+	}
 
 	m_salmon.draw(projection_2D);
 
@@ -591,6 +608,18 @@ void World::on_key(GLFWwindow*, int key, int, int action, int mod)
 	// key is of 'type' GLFW_KEY_
 	// action can be GLFW_PRESS GLFW_RELEASE GLFW_REPEAT
 	// !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+
+	// Turns the game advanced mode on
+	if (action == GLFW_PRESS && key == GLFW_KEY_A) {
+		advanced = true;
+		
+		
+
+	}
+	else if (action == GLFW_RELEASE && key == GLFW_KEY_B) {
+		advanced = false;
+	}
+
 
 	// Resetting game
 	if (action == GLFW_RELEASE && key == GLFW_KEY_R)
