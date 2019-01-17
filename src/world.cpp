@@ -686,10 +686,36 @@ void World::on_key(GLFWwindow*, int key, int, int action, int mod)
 	// Turns the game advanced mode on
 	if (action == GLFW_PRESS && key == GLFW_KEY_A) {
 		advanced = true;
+		int w, h;
+		glfwGetWindowSize(m_window, &w, &h);
+		m_salmon.destroy();
+		m_salmon.init();
+		m_turtles.clear();
+		m_fish.clear();
+		m_sharks.clear();
+		m_puffer.clear();
+		m_whales.clear();
+		m_advturtles.clear();
+
+		m_water.reset_salmon_dead_time();
+		m_current_speed = 1.f;
 
 	}
 	else if (action == GLFW_RELEASE && key == GLFW_KEY_B) {
 		advanced = false;
+		int w, h;
+		glfwGetWindowSize(m_window, &w, &h);
+		m_salmon.destroy();
+		m_salmon.init();
+		m_turtles.clear();
+		m_fish.clear();
+		m_sharks.clear();
+		m_puffer.clear();
+		m_whales.clear();
+		m_advturtles.clear();
+
+		m_water.reset_salmon_dead_time();
+		m_current_speed = 1.f;
 	}
 
 
