@@ -687,8 +687,6 @@ void World::on_key(GLFWwindow*, int key, int, int action, int mod)
 	if (action == GLFW_PRESS && key == GLFW_KEY_A) {
 		advanced = true;
 
-
-
 	}
 	else if (action == GLFW_RELEASE && key == GLFW_KEY_B) {
 		advanced = false;
