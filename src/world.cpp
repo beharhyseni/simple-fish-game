@@ -707,6 +707,7 @@ void World::on_key(GLFWwindow*, int key, int, int action, int mod)
 		m_sharks.clear();
 		m_puffer.clear();
 		m_whales.clear();
+		m_advturtles.clear();
 
 		m_water.reset_salmon_dead_time();
 		m_current_speed = 1.f;

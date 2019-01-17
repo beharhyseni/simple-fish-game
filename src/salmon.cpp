@@ -306,7 +306,7 @@ bool Salmon::collides_with(const AdvTurtle& advturtle)
 	float other_r = std::max(advturtle.get_bounding_box().x, advturtle.get_bounding_box().y);
 	float my_r = std::max(m_scale.x, m_scale.y);
 	float r = std::max(other_r, my_r);
-	r *= 0.33f;
+	r *= 0.6f;
 	if (d_sq < r * r)
 		return true;
 	return false;
