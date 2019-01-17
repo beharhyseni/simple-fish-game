@@ -167,22 +167,8 @@ void Salmon::draw(const mat3& projection)
 {
 	transform_begin();
 
-	// !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-	// SALMON TRANSFORMATION CODE HERE
 
-	// see Transformations and Rendering in the specification pdf
-	// the following functions are available:
-	// transform_translate()
-	// transform_rotate()
-	// transform_scale()
-
-	// !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-	// REMOVE THE FOLLOWING LINES BEFORE ADDING ANY TRANSFORMATION CODE
-	//transform_translate({ 100.f, 100.f });
-	//transform_scale(m_scale);
-	// !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-
-	transform_translate({translation_vec.x, translation_vec.y });
+	transform_translate({m_position.x, m_position.y});
 	transform_scale(m_scale);
 	transform_rotate(m_rotation);
 	transform_end();
