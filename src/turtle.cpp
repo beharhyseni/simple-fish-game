@@ -2,7 +2,6 @@
 #include "turtle.hpp"
 
 #include <cmath>
-
 Texture Turtle::turtle_texture;
 bool Turtle::init()
 {

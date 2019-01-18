@@ -2,7 +2,7 @@
 #include "advturtle.hpp"
 
 #include <cmath>
-
+bool random_movement = false;
 Texture AdvTurtle::advturtle_texture;
 bool AdvTurtle::init()
 {
@@ -86,6 +86,15 @@ void AdvTurtle::update(float ms)
 	const float TURTLE_SPEED = 200.f;
 	float step = -TURTLE_SPEED * (ms / 1000);
 	m_position.x += step;
+	if (random_movement) {
+		m_position.y += step / (rand() % 4 + 1);
+		random_movement = false;
+	}
+
+	else {
+		m_position.y -= step / (rand() % 4 + 1);
+		random_movement = true;
+	}
 }
 
 void AdvTurtle::draw(const mat3& projection)
