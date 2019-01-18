@@ -233,7 +233,7 @@ bool Salmon::collides_with(const Turtle& turtle)
 	float other_r = std::max(turtle.get_bounding_box().x, turtle.get_bounding_box().y);
 	float my_r = std::max(m_scale.x, m_scale.y);
 	float r = std::max(other_r, my_r);
-	r *= 0.6f;
+	r *= 0.7f;
 	if (d_sq < r * r)
 		return true;
 	return false;
@@ -262,7 +262,7 @@ bool Salmon::collides_with(const Shark& shark)
 	float other_r = std::max(shark.get_bounding_box().x, shark.get_bounding_box().y);
 	float my_r = std::max(m_scale.x, m_scale.y);
 	float r = std::max(other_r, my_r);
-	r *= 0.4f;
+	r *= 0.32f;
 	if (d_sq < r * r)
 		return true;
 	return false;
@@ -276,7 +276,7 @@ bool Salmon::collides_with(const Puffer& puffer)
 	float other_r = std::max(puffer.get_bounding_box().x, puffer.get_bounding_box().y);
 	float my_r = std::max(m_scale.x, m_scale.y);
 	float r = std::max(other_r, my_r);
-	r *= 0.9f;
+	r *= 0.83f;
 	if (d_sq < r * r)
 		return true;
 	return false;
