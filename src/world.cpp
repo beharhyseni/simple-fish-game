@@ -201,6 +201,7 @@ bool World::update(float elapsed_ms)
 					m_water.set_salmon_dead();
 				}
 				m_salmon.kill();
+				m_points = 0;
 				break;
 			}
 		}
@@ -238,6 +239,7 @@ bool World::update(float elapsed_ms)
 					m_water.set_salmon_dead();
 				}
 				m_salmon.kill();
+				m_points = 0;
 				break;
 			}
 		}
@@ -252,6 +254,7 @@ bool World::update(float elapsed_ms)
 					m_water.set_salmon_dead();
 				}
 				m_salmon.kill();
+				m_points = 0;
 				break;
 			}
 		}
@@ -266,6 +269,7 @@ bool World::update(float elapsed_ms)
 					m_water.set_salmon_dead();
 				}
 				m_salmon.kill();
+				m_points = 0;
 				break;
 			}
 		}
@@ -279,6 +283,7 @@ bool World::update(float elapsed_ms)
 					m_water.set_salmon_dead();
 				}
 				m_salmon.kill();
+				m_points = 0;
 				break;
 			}
 		}
@@ -696,6 +701,7 @@ void World::on_key(GLFWwindow*, int key, int, int action, int mod)
 		m_puffer.clear();
 		m_whales.clear();
 		m_advturtles.clear();
+		m_points = 0;
 
 		m_water.reset_salmon_dead_time();
 		m_current_speed = 1.f;
@@ -713,6 +719,7 @@ void World::on_key(GLFWwindow*, int key, int, int action, int mod)
 		m_puffer.clear();
 		m_whales.clear();
 		m_advturtles.clear();
+		m_points = 0;
 
 		m_water.reset_salmon_dead_time();
 		m_current_speed = 1.f;
@@ -732,6 +739,7 @@ void World::on_key(GLFWwindow*, int key, int, int action, int mod)
 		m_puffer.clear();
 		m_whales.clear();
 		m_advturtles.clear();
+		m_points = 0;
 
 		m_water.reset_salmon_dead_time();
 		m_current_speed = 1.f;
@@ -808,5 +816,4 @@ void World::on_mouse_move(GLFWwindow* window, double xpos, double ypos)
 	m_salmon.set_rotation(the_angle);
 
 }
-
 

@@ -428,6 +428,7 @@ float Salmon::calc_angle(double p1, double p2, double xpos, double ypos) {
 void Salmon::kill()
 {
 	m_is_alive = false;
+	
 }
 
 // Called when the salmon collides with a fish
