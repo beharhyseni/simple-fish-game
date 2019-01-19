@@ -12,6 +12,7 @@ uniform int light_up;
 // Output color
 layout(location = 0) out  vec4 color;
 
+
 void main()
 {
 	color = vec4(fcolor * vcolor, 1.0);
@@ -21,6 +22,9 @@ void main()
 	if (light_up == 1 && radius < 1.0)
 	{
 		// 0.6 is just to make it not too strong
-		color.xyz += (1.0 - radius) * 0.6 * vec3(1.0, 1.0, 1.0);
+		color.xyz += (1.0 - radius) * 0.6 * vec3(1.0, 1.0, 0.0);
+		
+		
+		
 	}
 }

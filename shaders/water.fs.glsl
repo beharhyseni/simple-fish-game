@@ -42,9 +42,10 @@ vec2 distort(vec2 uv) {
 vec4 color_shift(vec4 in_color) {
 	vec4 color = in_color;
 
-	vec4 final_color = vec4(color.r, color.g, color.b + 0.5f, color.a);
+	vec4 final_color = vec4(color.r, color.g, color.b + 0.35f, color.a);
 
 	return final_color;
+	//return color;
 }
 
 vec4 fade_color(vec4 in_color) {

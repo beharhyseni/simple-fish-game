@@ -210,10 +210,22 @@ void Salmon::draw(const mat3& projection)
 	// !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 	// HERE TO SET THE CORRECTLY LIGHT UP THE SALMON IF HE HAS EATEN RECENTLY
 	// !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-	int light_up = the_light;
-	glUniform1iv(light_up_uloc, 1, &light_up);
+	//int light_up = the_light;
+	int light_up = 0;
+
+	if (m_light_up_countdown_ms > 0) {
+		light_up = 1;
+		glUniform1iv(light_up_uloc, 1, &light_up);
+	}
+	else {
+		light_up = 0;
+		glUniform1iv(light_up_uloc, 1, &light_up);
+	}
+	//glUniform1iv(light_up_uloc, 1, &light_up);
 
 	float red_color[] = { 255.f, 0.f, 0.f };
+
+	
 
 	// When the salmon is dead (that is, gets hit by a turtle or a shark), color the salmon in red when sinking
 	if (!is_alive()) {
